@@ -1,0 +1,38 @@
+{
+  "name": "r-component-table",
+  "version": "0.2.0",
+  "description": "A React Component that renders certain UI elements with ease",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kolhar730/r-components.git"
+  },
+  "keywords": [
+    "r-component-table", "r-components", "table"
+  ],
+  "author": "kolhar730",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kolhar730/r-components/issues"
+  },
+  "homepage": "https://github.com/Kolhar730/r-components#readme",
+  "dependencies": {
+    "prop-types": "^15.6.2",
+    "react": "^16.7.0",
+    "webpack": "^4.28.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "webpack-cli": "^3.2.1"
+  }
+}
