@@ -1,38 +1,39 @@
 {
-  "name": "r-component-table",
-  "version": "0.2.0",
-  "description": "A React Component that renders certain UI elements with ease",
-  "main": "build/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack --watch",
-    "build": "webpack"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Kolhar730/r-components.git"
-  },
-  "keywords": [
-    "r-component-table", "r-components", "table"
-  ],
-  "author": "kolhar730",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Kolhar730/r-components/issues"
-  },
-  "homepage": "https://github.com/Kolhar730/r-components#readme",
-  "dependencies": {
-    "prop-types": "^15.6.2",
-    "react": "^16.7.0",
-    "webpack": "^4.28.4"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.5",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-env": "^1.7.0",
-    "webpack-cli": "^3.2.1"
-  }
+    "name": "r-component-table-component",
+    "version": "0.1.0",
+    "description": "React Component for making tables with ease.",
+    "keywords": [
+        "React",
+        "Component",
+        "r-component-table",
+        "r-component",
+        "table"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Kolhar730/r-components"
+    },
+    "main": "./lib/RComponentTable.js",
+    "license": "MIT",
+    "scripts": {
+        "build": "webpack"
+    },
+    "peerDependencies": {
+        "prop-types": "^15.6.0",
+        "react": "^16.0.0",
+        "react-dom": "^16.0.0"
+    },
+    "devDependencies": {
+        "babel-core": "^6.21.0",
+        "babel-loader": "^7.1.4",
+        "babel-preset-env": "^1.6.1",
+        "babel-preset-react": "^6.16.0",
+        "babel-preset-stage-0": "^6.24.1",
+        "path": "^0.12.7",
+        "prop-types": "^15.6.0",
+        "react": "^16.0.0",
+        "react-dom": "^16.0.0",
+        "webpack": "^4.5.0",
+        "webpack-cli": "^3.2.1"
+    }
 }
