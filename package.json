@@ -1,7 +1,7 @@
 {
     "name": "r-component-tables",
     "version": "0.1.0",
-    "description": "React Component for making tables with ease.",
+    "description": "React Component for rendering tables with ease.",
     "keywords": [
         "React",
         "Component",
