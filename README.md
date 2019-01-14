@@ -1,3 +1,3 @@
-# r-component-table-component
+# r-component-tables
 
 React Component for easy table renderings
