@@ -6,10 +6,10 @@ community and provide you all with easy and usable components.
 As an outsider, just choose who you want to be:
 
 ```javascript
-  var outsiders = ["Skeptic", "Friend", "Supporter", "Mentor"]
+  var outsiders = ["Skeptic", "Friend", "Supporter", "Mentor"];
   outsiders.forEach(function(person) {
-      alert('I welcome you all, let's build r-components together")
-      console.log("I also do not know why I did this")
+      alert('I welcome you all, let's build r-components together");
+      console.log("I also do not know why I did this");
   });
 ```
 
