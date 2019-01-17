@@ -1,90 +1,93 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import './styles.css'
 
-const propTypes = {
-    label: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-    styles: PropTypes.object
-}
+class RComponentTables extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      finalElement: []
+    };
 
-const defaultProps = {
-    styles: {
-        label: {
-            fontFamily: 'Comic Sans MS',
-            color: 'green'
-        },
-        input: {
-            background: '#ddd',
-            border: '1px solid red'
-        }
-    }
-}
+    this.topMargin = {
+      marginTop: "30px"
+    };
+  }
 
-class BoilerplateComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
+  componentWillMount() {
+    var tempRows = this.props.tableRows;
+    var tempContent = this.props.tableContent;
+
+    for (var i = 0; i < this.props.tableRows.length; i++) {
+      tempRows[i] = this.props.tableRows[i];
+      tempContent[i] = Object.values(this.props.tableContent[i]);
     }
 
-    handleChange(e) {
-        this.props.onChange(e.target.value);
-    }
-    
-    render() {
-        const styles = this.props.styles || {};
+    var tableHeaders = (
+      <tr key={"tr" + Math.floor(Math.random() * 200)}>
+        {tempRows.map(column => {
+          return <th key={"th" + Math.floor(Math.random() * 900)}>{column}</th>;
+        })}
+      </tr>
+    );
 
-        return (
-            <div>
-                <label style={styles.label}>{this.props.label}</label>
-                <input type="text" style={styles.input} onChange={this.handleChange} />
+    var tableBody = [];
+
+    tableBody = tempContent.map(row => {
+      return (
+        <tr key={"tri" + Math.floor(Math.random() * 700)}>
+          {row.map(function(col) {
+            return <td key={"tr" + Math.floor(Math.random() * 400)}>{col}</td>;
+          })}
+        </tr>
+      );
+    });
+
+    //console.log(typeof(tableBody));
+
+    var tBody = (
+      <React.Fragment>
+        <thead>{tableHeaders}</thead>
+        <tbody>{tableBody}</tbody>
+      </React.Fragment>
+    );
+
+    //console.log(tBody);
+
+    this.setState(
+      {
+        finalElement: [...this.state.finalElement, tBody]
+      },
+      () => {
+        console.log(this.state.finalElement);
+      }
+    );
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <div className="Component">
+            <h1>{this.props.tableHeading}</h1>
+            <div style={this.topMargin}>
+            <table className="main-table">{this.state.finalElement[0]}</table>
             </div>
-        );
-    }
+        </div>
+      </React.Fragment>
+    );
+  }
 }
 
-BoilerplateComponent.propTypes = propTypes;
-BoilerplateComponent.defaultProps = defaultProps;
+RComponentTables.defaultProps = {
+  //makeResponsive: true,
+  tableHeading: "Here's a Table Heading"
+};
 
-export default BoilerplateComponent;
+RComponentTables.propTypes = {
+  tableHeading: PropTypes.string,
+  tableRows: PropTypes.array.isRequired,
+  tableContent: PropTypes.array.isRequired,
+  //makeResponsive: PropTypes.bool.isRequired
+};
 
-// import React, {Component} from 'react';
-// import PropTypes from 'prop-types';
-
-// class RComponentTable extends Component {
-//     constructor (props) {
-//         super(props);
-//         this.state = {
-//             isFixedSize: false,
-//             recvProps: false,
-//             heading: '',
-//             rows:[],
-//             content: [],
-//         }; 
-//     }
-
-//     componentWillReceiveProps (props) {
-//         props !== null ? this.setState({recvProps: !this.state.recvProps}, () => {console.log('Received Props successfully')}) : alert("There's been an error in receiving props!");
-
-//         if (this.state.recvProps) {
-//             this.setState({heading: props.tableHeading, rows:props.tableRows, content: props.tableContent}, () => {console.log("Set all data for rendering.")});
-//         } else {
-//             console.error("There's been a problem with the props that you are passing!");
-//         }
-//     }
-
-//     render() {
-//         return (
-//             <React.Fragment>
-                
-//             </React.Fragment>
-//         );
-//     }
-// }
-
-// RComponentTable.propTypes = {
-//     tableHeading: PropTypes.string.isRequired,
-//     tableRows: PropTypes.array.isRequired,
-//     tableContent: PropTypes.array.isRequired
-// }
-
-// export default RComponentTable;
+export default RComponentTables;

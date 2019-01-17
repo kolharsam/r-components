@@ -1,0 +1,31 @@
+.Component {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+  }
+  
+  .main-table {
+    overflow-x: auto;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+  
+  .main-table th {
+    border: 2px dashed black;
+    padding: 10px;
+  }
+  
+  .main-table td {
+    padding: 8px;
+  }
+  
+  .main-table thead th:nth-child(odd) {
+    background-color: #c4c4c4;
+  }
+  
+  .main-table tr:nth-child(even) {
+    background-color: #c4c4c4;
+  }
+  
