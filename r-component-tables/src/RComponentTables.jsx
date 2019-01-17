@@ -2,28 +2,31 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styles from './styles.css'
 
+const topMargin = {
+  marginTop: '30px'
+};
+
+const localStyles = {
+  // TODO: Load Local Styles here
+};
 class RComponentTables extends Component {
   constructor(props) {
     super(props);
     this.state = {
       finalElement: []
     };
-
-    this.topMargin = {
-      marginTop: "30px"
-    };
   }
 
   componentWillMount() {
-    var tempRows = this.props.tableRows;
-    var tempContent = this.props.tableContent;
+    let tempRows = this.props.tableRows;
+    let tempContent = this.props.tableContent;
 
-    for (var i = 0; i < this.props.tableRows.length; i++) {
+    for (let i = 0; i < this.props.tableRows.length; i++) {
       tempRows[i] = this.props.tableRows[i];
       tempContent[i] = Object.values(this.props.tableContent[i]);
     }
 
-    var tableHeaders = (
+    let tableHeaders = (
       <tr key={"tr" + Math.floor(Math.random() * 200)}>
         {tempRows.map(column => {
           return <th key={"th" + Math.floor(Math.random() * 900)}>{column}</th>;
@@ -31,7 +34,7 @@ class RComponentTables extends Component {
       </tr>
     );
 
-    var tableBody = [];
+    let tableBody = [];
 
     tableBody = tempContent.map(row => {
       return (
@@ -45,7 +48,7 @@ class RComponentTables extends Component {
 
     //console.log(typeof(tableBody));
 
-    var tBody = (
+    let tBody = (
       <React.Fragment>
         <thead>{tableHeaders}</thead>
         <tbody>{tableBody}</tbody>
@@ -69,7 +72,7 @@ class RComponentTables extends Component {
       <React.Fragment>
         <div className={styles.component}>
             <h1>{this.props.tableHeading}</h1>
-            <div style={this.topMargin}>
+            <div style={topMargin}>
             <table className={styles.mainTable}>{this.state.finalElement[0]}</table>
             </div>
         </div>
