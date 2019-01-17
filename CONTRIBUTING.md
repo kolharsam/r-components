@@ -8,7 +8,7 @@ As an outsider, just choose who you want to be:
 ```javascript
   var outsiders = ["Skeptic", "Friend", "Supporter", "Mentor"];
   outsiders.forEach(function(person) {
-      alert('I welcome you all, let's build r-components together");
+      alert("I welcome you all, let's build r-components together");
       console.log("I also do not know why I did this");
   });
 ```
