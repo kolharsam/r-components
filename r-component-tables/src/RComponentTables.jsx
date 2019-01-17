@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import './styles.css'
+import styles from './styles.css'
 
 class RComponentTables extends Component {
   constructor(props) {
@@ -67,10 +67,10 @@ class RComponentTables extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="Component">
+        <div className={styles.component}>
             <h1>{this.props.tableHeading}</h1>
             <div style={this.topMargin}>
-            <table className="main-table">{this.state.finalElement[0]}</table>
+            <table className={styles.mainTable}>{this.state.finalElement[0]}</table>
             </div>
         </div>
       </React.Fragment>
