@@ -1,24 +1,42 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import styled from 'styled-components';
+//import styled from 'styled-components'; - TODO: write import once I know what to do with the styles
 
 // BEGIN STYLES
 
+//  TODO: WHAT DO I PUT IN STYLES?
 
 // END STYLES
+
+const data = {
+    "Manchester United": 13,
+    "Chelsea": 5,
+    "Arsenal": 3,
+    "Manchester City": 3,
+    "Leicester City": 1,
+    "Blackburn Rovers": 1,
+    "Liverpool": 0,
+    "Tottenham Hotspurs": 0
+}
 
 class RBarGraph extends Component {
     constructor(props) {
         super(props);
         this.drawGridLine = this.drawGridLine.bind(this);
         this.drawBars = this.drawBars.bind(this);
-        this.draw = this.draw.bind(this)
+        this.draw = this.draw.bind(this);
+        this.makeBarGraph = this.makeBarGraph.bind(this);
+        this.makeLabelText = this.makeLabelText.bind(this);
+        this.makeLegend = this.makeLegend.bind(this);
+        this.makeBars = this.makeBars.bind(this);
     }
 
     componentDidMount() {
         const canvas = this.refs.canvas;
         const context = canvas.getContext('2d');
         const legend = this.refs.legend;
+
+        this.makeBarGraph(canvas, context, legend);
     }
 
     drawGridLine (context, startX, startY, endX, endY, lineColor) {
@@ -38,10 +56,93 @@ class RBarGraph extends Component {
         context.restore();
     }
 
+    makeLabelText (context, canvas) {
+        context.save();
+        context.textBaseline = "bottom";
+        context.textAlign = "center";
+        context.fillStyle = "#000000";
+        context.font = "bold 14px Helvetica";
+        context.fillText(this.props.label, canvas.width / 2, canvas.height);
+        context.restore();
+    }
+
+    makeLegend(legend) {
+        var barIndex = 0;
+        var ul = document.createElement("ul");
+        legend.append(ul);
+        for (var data in this.props.data) {
+            var li = document.createElement("li");
+            li.style.listStyle = "none";
+            li.style.borderLeft = "20px solid " + this.props.colors[barIndex % this.props.colors.length];
+            li.style.padding = "5px";
+            li.textContent = data;
+            ul.append(li);
+            barIndex++;
+        }
+    }
+
+    makeGridLines (canvasHeight, maxValue, canvas, context) {
+        var gridValue = 0;
+        while (gridValue <= maxValue) {
+            var gridY = canvasHeight * (1 - gridValue / maxValue) + this.props.padding;
+            drawLine(context, 0, gridY, canvas.width, gridY, this.options.gridColor);
+
+            //writing grid markers
+            context.save();
+            context.fillStyle = this.options.gridColor;
+            context.textBaseline = "bottom";
+            context.font = "bold 10px Arial";
+            context.fillText(gridValue, 10, gridY - 2);
+            context.restore();
+
+            gridValue += this.props.gridScale;
+        }
+    }
+
+    makeBars (canvasWidth, canvasHeight, maxValue, context, canvas) {
+        var barIndex = 0;
+        var numberOfBars = Object.keys(this.props.data).length;
+        var barSize = (canvasWidth) / numberOfBars;
+
+        for (var iter in this.props.data) {
+            var val = this.props.data[iter];
+            var barHeight = Math.round(canvasHeight * val / maxValue);
+            this.drawBars(context, 
+                        this.props.padding + barIndex * barSize, 
+                        canvas.height - barHeight - this.props.padding, 
+                        barSize, barHeight, this.props.colors[barIndex % this.props.colors.length]
+                        );
+            barIndex++;
+        }
+    }
+
+    makeBarGraph (canvas, context, legend) {
+            var maxValue = 0;
+                
+            for (var number in this.props.data) {
+                maxValue = Math.max(maxValue, this.props.data[number]);
+            }
+
+            var canvasAdjustHeight = canvas.height - this.props.padding * 2;
+            var canvasAdjustWidth = canvas.width - this.props.padding * 2;
+
+            //drawing the grid lines
+            this.makeGridLines(canvasAdjustHeight, maxValue, canvas, context);
+
+            //drawing the bars
+            this.makeBars(canvasAdjustWidth, canvasAdjustHeight, maxValue, context, canvas);
+
+            //draw names
+            this.makeLabelText(context, canvas);
+
+            //draw legend
+            this.makeLegend(legend);
+    }
+
     render() {
         return (
             <React.Fragment>
-              <canvas id="canvas" ref="canvas" width={640} height={420} />
+              <canvas id="canvas" ref="canvas" width={640} height={420}></canvas>
               <legend for="canvas" ref="legend"></legend>
             </React.Fragment>
         );
@@ -50,141 +151,40 @@ class RBarGraph extends Component {
 
 RBarGraph.propTypes = {
   label: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  styles: PropTypes.object
+  styles: PropTypes.object,
+  padding: PropTypes.number,
+  gridScale: PropTypes.number.isRequired,
+  gridColor: PropTypes.string,
+  colors: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired
+};
+
+RBarGraph.defaultProps = {
+  label: "Premier League Winners",
+  padding: 20,
+  gridScale: 5,
+  gridColor: "#eeeeee",
+  colors: ["#a55ca5", "#67b6c7", "#bccd7a", "#eb9743"],
+  data: data
 };
 
 export default RBarGraph;
 
+{
+  /**
 
-{/**
-        Reference
+    code used for counting the champions: 
 
-        var myCanvas = document.getElementById("myCanvas");
-myCanvas.width = 300;
-myCanvas.height = 300;
-   
-var ctx = myCanvas.getContext("2d");
- 
-function drawLine(ctx, startX, startY, endX, endY,color){
-    ctx.save();
-    ctx.strokeStyle = color;
-    ctx.beginPath();
-    ctx.moveTo(startX,startY);
-    ctx.lineTo(endX,endY);
-    ctx.stroke();
-    ctx.restore();
-}
- 
-function drawBar(ctx, upperLeftCornerX, upperLeftCornerY, width, height,color){
-    ctx.save();
-    ctx.fillStyle=color;
-    ctx.fillRect(upperLeftCornerX,upperLeftCornerY,width,height);
-    ctx.restore();
-}
- 
-var myVinyls = {
-    "Classical music": 10,
-    "Alternative rock": 14,
-    "Pop": 2,
-    "Jazz": 12
-};
- 
-var Barchart = function(options){
-    this.options = options;
-    this.canvas = options.canvas;
-    this.ctx = this.canvas.getContext("2d");
-    this.colors = options.colors;
-  
-    this.draw = function(){
-        var maxValue = 0;
-        for (var categ in this.options.data){
-            maxValue = Math.max(maxValue,this.options.data[categ]);
-        }
-        var canvasActualHeight = this.canvas.height - this.options.padding * 2;
-        var canvasActualWidth = this.canvas.width - this.options.padding * 2;
- 
-        //drawing the grid lines
-        var gridValue = 0;
-        while (gridValue <= maxValue){
-            var gridY = canvasActualHeight * (1 - gridValue/maxValue) + this.options.padding;
-            drawLine(
-                this.ctx,
-                0,
-                gridY,
-                this.canvas.width,
-                gridY,
-                this.options.gridColor
-            );
-             
-            //writing grid markers
-            this.ctx.save();
-            this.ctx.fillStyle = this.options.gridColor;
-            this.ctx.textBaseline="bottom"; 
-            this.ctx.font = "bold 10px Arial";
-            this.ctx.fillText(gridValue, 10,gridY - 2);
-            this.ctx.restore();
- 
-            gridValue+=this.options.gridScale;
-        }      
-  
-        //drawing the bars
-        var barIndex = 0;
-        var numberOfBars = Object.keys(this.options.data).length;
-        var barSize = (canvasActualWidth)/numberOfBars;
- 
-        for (categ in this.options.data){
-            var val = this.options.data[categ];
-            var barHeight = Math.round( canvasActualHeight * val/maxValue) ;
-            drawBar(
-                this.ctx,
-                this.options.padding + barIndex * barSize,
-                this.canvas.height - barHeight - this.options.padding,
-                barSize,
-                barHeight,
-                this.colors[barIndex%this.colors.length]
-            );
- 
-            barIndex++;
-        }
- 
-        //drawing series name
-        this.ctx.save();
-        this.ctx.textBaseline="bottom";
-        this.ctx.textAlign="center";
-        this.ctx.fillStyle = "#000000";
-        this.ctx.font = "bold 14px Arial";
-        this.ctx.fillText(this.options.seriesName, this.canvas.width/2,this.canvas.height);
-        this.ctx.restore();  
-         
-        //draw legend
-        barIndex = 0;
-        var legend = document.querySelector("legend[for='myCanvas']");
-        var ul = document.createElement("ul");
-        legend.append(ul);
-        for (categ in this.options.data){
-            var li = document.createElement("li");
-            li.style.listStyle = "none";
-            li.style.borderLeft = "20px solid "+this.colors[barIndex%this.colors.length];
-            li.style.padding = "5px";
-            li.textContent = categ;
-            ul.append(li);
-            barIndex++;
-        }
-    }
-}
- 
- 
-var myBarchart = new Barchart(
-    {
-        canvas:myCanvas,
-        seriesName:"Vinyl records",
-        padding:20,
-        gridScale:5,
-        gridColor:"#eeeeee",
-        data:myVinyls,
-        colors:["#a55ca5","#67b6c7", "#bccd7a","#eb9743"]
-    }
-);
+    var champ = ["MCFC", "CHE", "LEI", "CHE", "MCFC", "MUFC", "MCFC", "MUFC", 
+                "CHE", "MUFC", "MUFC", "MUFC", "CHE", "CHE", "ARS", "MUFC", "ARS", "MUFC", 
+                "MUFC", "MUFC", "ARS", "MUFC", "MUFC", "BLK", "MUFC", "MUFC"];
 
-*/}
+
+    var champCount = champ.reduce((total, value) => {
+            total[value] = (total[value] || 0) + 1;
+        return total;
+    });
+
+    console.log(champCount);
+*/
+}
