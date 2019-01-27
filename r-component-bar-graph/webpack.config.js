@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/RComponentBarGraph.jsx',
     output: {
         path: path.resolve('lib'),
-        filename: 'RComponentBarGraph.js',
+        filename: 'index.js',
         libraryTarget: 'commonjs2'
     },
     module: {

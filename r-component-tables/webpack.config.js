@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/RComponentTables.jsx',
     output: {
         path: path.resolve('lib'),
-        filename: 'RComponentTables.js',
+        filename: 'index.js',
         libraryTarget: 'commonjs2'
     },
     module: {
