@@ -19,7 +19,7 @@ const data = {
     "Tottenham Hotspurs": 0
 }
 
-class RBarGraph extends Component {
+class RComponentBarGraph extends Component {
     constructor(props) {
         super(props);
         this.drawGridLine = this.drawGridLine.bind(this);
@@ -149,7 +149,7 @@ class RBarGraph extends Component {
     }
 }
 
-RBarGraph.propTypes = {
+RComponentBarGraph.propTypes = {
   label: PropTypes.string.isRequired,
   styles: PropTypes.object,
   padding: PropTypes.number,
@@ -159,7 +159,7 @@ RBarGraph.propTypes = {
   data: PropTypes.array.isRequired
 };
 
-RBarGraph.defaultProps = {
+RComponentBarGraph.defaultProps = {
   label: "Premier League Winners",
   padding: 20,
   gridScale: 5,
@@ -168,7 +168,7 @@ RBarGraph.defaultProps = {
   data: data
 };
 
-export default RBarGraph;
+export default RComponentBarGraph;
 
 {
   /**
