@@ -1,6 +1,6 @@
 {
     "name": "r-component-bar-graph",
-    "version": "0.5.3",
+    "version": "0.5.4",
     "description": "React Component for rendering Bar Graphs.",
     "keywords": [
         "React",
