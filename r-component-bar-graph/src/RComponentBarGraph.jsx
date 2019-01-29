@@ -22,19 +22,26 @@ const data = {
 class RComponentBarGraph extends Component {
     constructor(props) {
         super(props);
+
+        // required Refs
+        this.canvasRef = React.createRef();
+        this.legendRef = React.createRef();
+
+        // functions of the class
         this.drawGridLine = this.drawGridLine.bind(this);
         this.drawBars = this.drawBars.bind(this);
-        this.draw = this.draw.bind(this);
+        this.makeGridLines = this.makeGridLines.bind(this);
         this.makeBarGraph = this.makeBarGraph.bind(this);
         this.makeLabelText = this.makeLabelText.bind(this);
         this.makeLegend = this.makeLegend.bind(this);
         this.makeBars = this.makeBars.bind(this);
+        this.drawLine = this.drawLine.bind(this);
     }
 
     componentDidMount() {
-        const canvas = this.refs.canvas;
+        const canvas = this.canvasRef.current;
         const context = canvas.getContext('2d');
-        const legend = this.refs.legend;
+        const legend = this.legendRef.current;
 
         this.makeBarGraph(canvas, context, legend);
     }
@@ -81,15 +88,26 @@ class RComponentBarGraph extends Component {
         }
     }
 
+    drawLine (context, startX, startY, endX, endY ,gridColor) {
+            context.save();
+            context.strokeStyle = gridColor;
+            context.beginPath();
+            context.moveTo(startX, startY);
+            context.lineTo(endX, endY);
+            context.stroke();
+            context.restore();
+    }
+
     makeGridLines (canvasHeight, maxValue, canvas, context) {
         var gridValue = 0;
         while (gridValue <= maxValue) {
             var gridY = canvasHeight * (1 - gridValue / maxValue) + this.props.padding;
-            drawLine(context, 0, gridY, canvas.width, gridY, this.options.gridColor);
+
+            this.drawLine(context, 0, gridY, canvas.width, gridY, this.props.gridColor);
 
             //writing grid markers
             context.save();
-            context.fillStyle = this.options.gridColor;
+            context.fillStyle = this.props.gridColor;
             context.textBaseline = "bottom";
             context.font = "bold 10px Arial";
             context.fillText(gridValue, 10, gridY - 2);
@@ -142,8 +160,8 @@ class RComponentBarGraph extends Component {
     render() {
         return (
             <React.Fragment>
-              <canvas id="canvas" ref="canvas" width={640} height={420}></canvas>
-              <legend for="canvas" ref="legend"></legend>
+              <canvas id="canvas" ref={this.canvasRef} width={640} height={420}></canvas>
+              <legend for="canvas" ref={this.legendRef}></legend>
             </React.Fragment>
         );
     }
