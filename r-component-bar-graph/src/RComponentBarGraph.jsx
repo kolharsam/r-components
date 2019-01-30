@@ -15,8 +15,8 @@ const data = {
     "Manchester City": 3,
     "Leicester City": 1,
     "Blackburn Rovers": 1,
-    "Liverpool": 0,
-    "Tottenham Hotspurs": 0
+    // "Liverpool": 0,
+    // "Tottenham Hotspurs": 0
 }
 
 class RComponentBarGraph extends Component {
@@ -161,7 +161,7 @@ class RComponentBarGraph extends Component {
         return (
             <React.Fragment>
               <canvas id="canvas" ref={this.canvasRef} width={640} height={420}></canvas>
-              <legend for="canvas" ref={this.legendRef}></legend>
+              <legend htmlFor="canvas" ref={this.legendRef}></legend>
             </React.Fragment>
         );
     }
@@ -182,7 +182,7 @@ RComponentBarGraph.defaultProps = {
   padding: 20,
   gridScale: 5,
   gridColor: "#eeeeee",
-  colors: ["#a55ca5", "#67b6c7", "#bccd7a", "#eb9743"],
+    colors: ["#63b598", "#ce7d78", "#ea9e70", "#a48a9e", "#c6e1e8", "#648177", "#0d5ac1"],
   data: data
 };
 
