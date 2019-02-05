@@ -12,7 +12,7 @@ const data = {
 //   "Liverpool": 0,
 //   "Tottenham Hotspurs": 0
 };
-
+//lols 
 class RComponentPieChart extends Component {
     constructor (props) {
         super(props);
